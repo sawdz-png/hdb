@@ -157,6 +157,12 @@ function orderCardHTML(o, isNew) {
 
       ${o.notes ? `<div class="order-card__notes">"${escapeHtml(o.notes)}"</div>` : ""}
 
+      ${
+        o.payment_method === "efectivo" && o.cash_amount
+          ? `<div class="order-card__cash">💵 Paga con ${money(o.cash_amount)} — vuelto: ${money(o.cash_amount - o.total)}</div>`
+          : ""
+      }
+
       <div class="order-card__total">${money(o.total)}</div>
 
       <div class="order-card__actions">${actionsHTML(o)}</div>

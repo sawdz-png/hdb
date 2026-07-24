@@ -382,3 +382,63 @@
   color: var(--stone);
   font-family: var(--font-mono);
 }
+
+/* ============================================================
+   MONTO EN EFECTIVO + MERCADO PAGO (agregado)
+   ============================================================ */
+.field-hint {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: var(--gold);
+}
+
+.mp-box {
+  margin-top: 28px;
+  padding: 22px;
+  border: 1px dashed var(--gold);
+  border-radius: 14px;
+  text-align: center;
+}
+.mp-box h3 {
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.mp-box__alias {
+  font-family: "Space Mono", monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--cream);
+  margin: 8px 0 2px;
+  word-break: break-all;
+}
+.mp-box__holder {
+  font-size: 0.85rem;
+  color: var(--stone);
+  margin-bottom: 8px;
+}
+.mp-box__amount {
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.mp-box__note {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--stone);
+}
+
+.cash-note {
+  margin-top: 20px;
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* línea de vuelto en el panel del staff */
+.order-card__cash {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gold);
+}

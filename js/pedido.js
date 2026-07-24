@@ -90,6 +90,38 @@ document.querySelectorAll('input[name="orderType"]').forEach((radio) => {
   });
 });
 
+// mostrar el campo "¿con cuánto pagás?" solo si paga en efectivo
+function updateCashField() {
+  const isCash = document.querySelector('input[name="paymentMethod"]:checked').value === "efectivo";
+  document.getElementById("cashField").style.display = isCash ? "block" : "none";
+  if (!isCash) document.getElementById("cashAmount").value = "";
+}
+document.querySelectorAll('input[name="paymentMethod"]').forEach((radio) => {
+  radio.addEventListener("change", updateCashField);
+});
+
+// hint en vivo del vuelto mientras escribe
+document.getElementById("cashAmount").addEventListener("input", () => {
+  const hint = document.getElementById("cashHint");
+  const val = Number(document.getElementById("cashAmount").value);
+  const total = currentTotal();
+  if (!val || total === 0) { hint.textContent = ""; return; }
+  if (val < total) {
+    hint.textContent = `Ojo: el total es ${money(total)}, falta plata.`;
+  } else if (val === total) {
+    hint.textContent = "Pagás justo, sin vuelto. 👌";
+  } else {
+    hint.textContent = `Vuelto: ${money(val - total)}`;
+  }
+});
+
+function currentTotal() {
+  return Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = findProduct(id);
+    return sum + (p ? p.price * qty : 0);
+  }, 0);
+}
+
 document.getElementById("orderForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -119,6 +151,20 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
   const orderType = document.querySelector('input[name="orderType"]:checked').value;
   const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
+  // monto en efectivo (opcional, solo si paga en efectivo)
+  let cashAmount = null;
+  if (paymentMethod === "efectivo") {
+    const raw = document.getElementById("cashAmount").value;
+    if (raw !== "") {
+      cashAmount = Number(raw);
+      if (isNaN(cashAmount) || cashAmount < total) {
+        errorEl.textContent = `El monto en efectivo no alcanza: el total del pedido es ${money(total)}.`;
+        errorEl.classList.add("is-visible");
+        return;
+      }
+    }
+  }
+
   const payload = {
     customer_name: document.getElementById("customerName").value.trim(),
     phone: document.getElementById("phone").value.trim(),
@@ -144,6 +190,7 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
     p_items: items,
     p_notes: payload.notes,
     p_total: total,
+    p_cash_amount: cashAmount,
   });
 
   if (error) {
@@ -158,7 +205,35 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
   document.getElementById("orderStep").style.display = "none";
   document.getElementById("confirmStep").style.display = "block";
   document.getElementById("orderNumber").textContent = `Pedido N.º ${data}`;
+
+  // si eligió Mercado Pago, mostrarle el alias y el monto a transferir
+  if (paymentMethod === "mercado_pago") {
+    document.getElementById("mpAlias").textContent = MP_ALIAS;
+    document.getElementById("mpHolder").textContent = `Titular: ${MP_TITULAR}`;
+    document.getElementById("mpAmount").textContent = `Total a transferir: ${money(total)}`;
+    document.getElementById("mpBox").style.display = "block";
+  }
+
+  // si paga en efectivo y dijo con cuánto, confirmarle el vuelto
+  if (paymentMethod === "efectivo" && cashAmount !== null) {
+    const cashNote = document.getElementById("cashNote");
+    cashNote.textContent =
+      cashAmount === total
+        ? "Anotado: pagás justo, sin vuelto."
+        : `Anotado: pagás con ${money(cashAmount)} — te llevamos ${money(cashAmount - total)} de vuelto.`;
+    cashNote.style.display = "block";
+  }
+
   window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+document.getElementById("copyAliasBtn").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(MP_ALIAS);
+    document.getElementById("copyAliasBtn").textContent = "¡Alias copiado!";
+  } catch {
+    // si el navegador no deja copiar, no pasa nada: el alias está a la vista
+  }
 });
 
 buildMenu();
