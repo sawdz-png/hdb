@@ -118,6 +118,7 @@
 }
 .form-field input[type="text"],
 .form-field input[type="tel"],
+.form-field input[type="number"],
 .form-field textarea {
   width: 100%;
   background: var(--char);
@@ -128,6 +129,13 @@
   font-family: var(--font-body);
   font-size: 0.95rem;
 }
+/* sacar las flechitas de subir/bajar del campo numérico */
+.form-field input[type="number"]::-webkit-outer-spin-button,
+.form-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-field input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
 .form-field input:focus,
 .form-field textarea:focus { border-color: var(--gold); }
 .form-field textarea { min-height: 80px; resize: vertical; }
