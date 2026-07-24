@@ -22,3 +22,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const MP_ALIAS = "hamburguesa.de.barrio";
 // Nombre del titular que va a ver el cliente al transferir:
 const MP_TITULAR = "Hamburguesa de Barrio";
+
+// WhatsApp del local (formato internacional SIN +, con 549 adelante
+// para celulares argentinos):
+const WSP_NUMBER = "5492216052642";

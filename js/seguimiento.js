@@ -116,8 +116,14 @@ function focusHTML(o) {
           <p class="mp-box__alias">${MP_ALIAS}</p>
           <p class="mp-box__holder">Titular: ${MP_TITULAR}</p>
           <p class="mp-box__amount">Total a transferir: ${money(o.total)}</p>
-          <button type="button" class="btn btn--ghost" id="copyAliasBtn">Copiar alias</button>
-          <p class="mp-box__note">Cuando retires o recibas el pedido, mostrá el comprobante.</p>
+          <div class="mp-box__actions">
+            <button type="button" class="btn btn--ghost" id="copyAliasBtn">Copiar alias</button>
+            <a class="btn btn--wsp" target="_blank" rel="noopener"
+               href="https://wa.me/${WSP_NUMBER}?text=${encodeURIComponent(`Hola! Te paso el comprobante del pedido #${o.id} 🍔`)}">
+               Enviar comprobante por WhatsApp
+            </a>
+          </div>
+          <p class="mp-box__note">Transferí y mandanos el comprobante por WhatsApp así confirmamos tu pedido más rápido.</p>
         </div>`
       : "";
 

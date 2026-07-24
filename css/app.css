@@ -666,3 +666,20 @@ a.track-card:hover { border-color: var(--gold); }
   font-size: 0.92rem;
 }
 .focus-card__eta strong { color: var(--gold); }
+
+/* ============================================================
+   BOTONES DEL BLOQUE MP
+   ============================================================ */
+.mp-box__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.btn--wsp {
+  background: #25d366; /* verde WhatsApp */
+  color: #10251a !important;
+  border: none;
+}
+.btn--wsp:hover { transform: translateY(-2px); background: #34e075; }
