@@ -136,6 +136,15 @@ p { margin: 0; }
 }
 .nav__links a:hover::after { right: 0; }
 
+.nav__links-cta {
+  background: var(--gold);
+  color: var(--char) !important;
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+.nav__links-cta::after { display: none; }
+.nav__links-cta:hover { background: #edb753; }
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -649,6 +658,8 @@ p { margin: 0; }
   text-align: center;
   margin-top: 8px;
 }
+.footer__legal a { color: var(--stone); text-decoration: underline; }
+.footer__legal a:hover { color: var(--gold); }
 
 /* ============================================================
    BACK TO TOP

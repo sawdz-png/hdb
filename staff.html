@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de pedidos · Hamburguesa de Barrio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="grate-overlay" aria-hidden="true"></div>
+
+<header class="nav">
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark">HDB</span>
+    <span class="nav__brand-name">Hamburguesa<br>de Barrio</span>
+  </a>
+</header>
+
+<main class="app-main">
+
+  <!-- LOGIN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>Panel de pedidos</h1>
+      <p class="sub">Acceso exclusivo para el local.</p>
+      <form id="loginForm">
+        <div class="form-field">
+          <label for="loginEmail">Usuario</label>
+          <input type="text" id="loginEmail" required autocomplete="username">
+        </div>
+        <div class="form-field">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" required autocomplete="current-password">
+        </div>
+        <p class="form-error" id="loginError"></p>
+        <button type="submit" class="btn btn--gold">Entrar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- PANEL -->
+  <div id="panelScreen" style="display:none;">
+    <div class="staff-header">
+      <h1>Pedidos</h1>
+      <button class="btn-logout" id="logoutBtn">Cerrar sesión</button>
+    </div>
+
+    <div class="status-tabs" id="statusTabs">
+      <button data-filter="pendiente" class="is-active">Pendientes <span class="badge-count" id="count-pendiente">0</span></button>
+      <button data-filter="aceptado">Aceptados <span class="badge-count" id="count-aceptado">0</span></button>
+      <button data-filter="listo">Listos <span class="badge-count" id="count-listo">0</span></button>
+      <button data-filter="todos">Todos</button>
+    </div>
+
+    <div id="orderList" class="order-list">
+      <p class="loading-state">Cargando pedidos...</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/staff.js"></script>
+</body>
+</html>

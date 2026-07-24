@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacer un pedido · Hamburguesa de Barrio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div class="grate-overlay" aria-hidden="true"></div>
+
+<header class="nav">
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark">HDB</span>
+    <span class="nav__brand-name">Hamburguesa<br>de Barrio</span>
+  </a>
+  <nav class="nav__links">
+    <a href="index.html">Inicio</a>
+    <a href="index.html#carta">Carta</a>
+    <a href="index.html#ubicacion">Cómo llegar</a>
+  </nav>
+</header>
+
+<main class="app-main">
+
+  <!-- PASO 1: armar el pedido -->
+  <div id="orderStep">
+    <div class="app-header">
+      <h1>Hacer un pedido</h1>
+      <p>Elegí las cantidades y completá tus datos. Se paga al retirar o al recibir.</p>
+    </div>
+
+    <div id="menuContainer"></div>
+
+    <div class="cart-bar">
+      <span class="cart-bar__count" id="cartCount">0 productos</span>
+      <span class="cart-bar__total" id="cartTotal">$0</span>
+    </div>
+
+    <form class="form-block" id="orderForm">
+      <div class="form-field">
+        <label for="customerName">Nombre</label>
+        <input type="text" id="customerName" required autocomplete="name">
+      </div>
+
+      <div class="form-field">
+        <label for="phone">Teléfono</label>
+        <input type="tel" id="phone" required autocomplete="tel" placeholder="221 xxx xxxx">
+      </div>
+
+      <div class="form-field">
+        <label>Retiro o delivery</label>
+        <div class="radio-group">
+          <label class="radio-pill">
+            <input type="radio" name="orderType" value="retiro" checked>
+            <span>Retiro en el local</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="orderType" value="delivery">
+            <span>Delivery</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-field" id="addressField" style="display:none;">
+        <label for="address">Dirección de entrega</label>
+        <input type="text" id="address" placeholder="Calle, número, entre calles">
+      </div>
+
+      <div class="form-field">
+        <label>Medio de pago</label>
+        <div class="radio-group">
+          <label class="radio-pill">
+            <input type="radio" name="paymentMethod" value="efectivo" checked>
+            <span>Efectivo</span>
+          </label>
+          <label class="radio-pill">
+            <input type="radio" name="paymentMethod" value="mercado_pago">
+            <span>Mercado Pago</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="notes">Notas (opcional)</label>
+        <textarea id="notes" placeholder="Sin cebolla, tocar timbre, etc."></textarea>
+      </div>
+
+      <p class="form-error" id="formError"></p>
+
+      <button type="submit" class="btn btn--gold" id="submitBtn">Enviar pedido</button>
+    </form>
+  </div>
+
+  <!-- PASO 2: confirmación -->
+  <div class="confirm-card" id="confirmStep" style="display:none;">
+    <div class="stamp__core-lg">#HDB</div>
+    <h2 style="margin-top:14px; color: var(--cream); text-transform: uppercase;">¡Pedido enviado!</h2>
+    <p>Ya lo estamos viendo en el local. Te confirmamos por teléfono.</p>
+    <p class="order-number" id="orderNumber"></p>
+    <a href="index.html" class="btn btn--ghost" style="margin-top:24px;">Volver al inicio</a>
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/menu-data.js"></script>
+<script src="js/pedido.js"></script>
+</body>
+</html>
