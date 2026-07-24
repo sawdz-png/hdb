@@ -140,8 +140,11 @@ p { margin: 0; }
 .nav__links-cta {
   background: var(--gold);
   color: var(--char) !important;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 999px;
+  position: relative;
+  top: -2px; /* compensa el espacio del subrayado de los links */
+  padding-bottom: 8px !important;
 }
 .nav__links-cta::after { display: none; }
 .nav__links-cta:hover { background: #edb753; }
@@ -177,6 +180,7 @@ p { margin: 0; }
     display: none;
   }
   .nav__links.is-open { display: flex; }
+  .nav__links-cta { top: 0; align-self: flex-start; }
 }
 
 /* ============================================================
