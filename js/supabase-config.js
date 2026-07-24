@@ -8,5 +8,8 @@
 // funciona Supabase): el que protege los datos es el RLS que
 // configuramos en supabase-schema.sql, no el secreto de esta clave.
 
-const SUPABASE_URL = "PEGAR_ACA_TU_PROJECT_URL";
-const SUPABASE_ANON_KEY = "PEGAR_ACA_TU_ANON_PUBLIC_KEY";
+// ============================================================
+// CONFIGURACIÓN DE SUPABASE
+// ============================================================
+const SUPABASE_URL = "https://zgrymjtliudlhepchiga.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpncnltanRsaXVkbGhlcGNoaWdhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4NjMwOTgsImV4cCI6MjEwMDQzOTA5OH0.xnmarb4Y1QX8Z62lRZchC7Ny4xRRQ430UQLxWWr_tlA";
