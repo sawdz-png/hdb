@@ -450,3 +450,219 @@
   font-weight: 700;
   color: var(--gold);
 }
+
+/* ============================================================
+   SEGUIMIENTO DE PEDIDOS (Mis pedidos)
+   ============================================================ */
+.track-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+
+.track-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+.track-card.is-rejected { border-color: #a04040; }
+
+.track-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 18px;
+}
+.track-card__id {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: var(--gold);
+}
+.track-card__time { font-size: 0.82rem; color: var(--stone); }
+
+.track-steps {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.track-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 62px;
+}
+.track-step__dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--char);
+}
+.track-step.is-done .track-step__dot {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.track-step__label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--stone);
+}
+.track-step.is-done .track-step__label { color: var(--cream); }
+.track-step__line {
+  flex: 1;
+  height: 2px;
+  background: var(--line);
+  margin: 0 4px 22px;
+}
+
+.track-card__desc { color: var(--cream); font-size: 0.92rem; }
+.track-card__rejected { color: #d98080; font-size: 0.92rem; }
+.track-card__total {
+  margin-top: 12px;
+  font-weight: 800;
+  color: var(--gold);
+  text-align: right;
+}
+
+.track-search {
+  border-top: 1px dashed var(--line);
+  padding-top: 32px;
+}
+.track-search h2 {
+  color: var(--cream);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+.track-search .sub { color: var(--stone); font-size: 0.9rem; margin-bottom: 18px; }
+
+/* ============================================================
+   SEGUIMIENTO ESTILO RESTOSIMPLE — pantalla protagonista
+   ============================================================ */
+.focus-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 36px 24px;
+  text-align: center;
+}
+.focus-card.is-rejected { border-color: #a04040; }
+
+.focus-card__icon { font-size: 3.4rem; line-height: 1; }
+.focus-card__title {
+  margin-top: 14px;
+  color: var(--cream);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 1.5rem;
+}
+.focus-card__desc { margin-top: 8px; color: var(--stone); font-size: 0.95rem; }
+.focus-card__id {
+  margin-top: 10px;
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.track-steps--big { justify-content: center; margin: 28px 0 6px; }
+.track-step.is-current .track-step__dot {
+  box-shadow: 0 0 0 5px rgba(240, 185, 90, 0.22);
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(240, 185, 90, 0.15); }
+  50%      { box-shadow: 0 0 0 8px rgba(240, 185, 90, 0.30); }
+}
+
+.focus-card__items {
+  list-style: none;
+  margin: 26px auto 0;
+  max-width: 420px;
+  text-align: left;
+  border-top: 1px dashed var(--line);
+  padding-top: 16px;
+}
+.focus-card__items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 0.92rem;
+  color: var(--cream);
+}
+.focus-card__total {
+  display: flex;
+  justify-content: space-between;
+  max-width: 420px;
+  margin: 10px auto 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.focus-card__live {
+  margin-top: 26px;
+  font-size: 0.78rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  animation: pulse-live 2s ease-in-out infinite;
+}
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.45; }
+}
+
+/* las tarjetas de la lista ahora son clickeables */
+a.track-card {
+  display: block;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+a.track-card:hover { border-color: var(--gold); }
+
+/* ============================================================
+   DEMORA ESTIMADA
+   ============================================================ */
+.eta-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--stone);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  align-self: center;
+}
+.btn-eta {
+  background: var(--char);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-eta:hover { background: var(--gold); color: var(--char); }
+.btn-eta--cancel { border-color: var(--line); color: var(--stone); }
+
+.order-card__eta {
+  margin-top: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.focus-card__eta {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 10px 18px;
+  border: 1px dashed var(--gold);
+  border-radius: 999px;
+  color: var(--cream);
+  font-size: 0.92rem;
+}
+.focus-card__eta strong { color: var(--gold); }

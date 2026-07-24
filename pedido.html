@@ -23,6 +23,7 @@
     <a href="index.html">Inicio</a>
     <a href="index.html#carta">Carta</a>
     <a href="index.html#ubicacion">Cómo llegar</a>
+    <a href="seguimiento.html">Mis pedidos</a>
   </nav>
 </header>
 
@@ -103,28 +104,7 @@
     </form>
   </div>
 
-  <!-- PASO 2: confirmación -->
-  <div class="confirm-card" id="confirmStep" style="display:none;">
-    <div class="stamp__core-lg">#HDB</div>
-    <h2 style="margin-top:14px; color: var(--cream); text-transform: uppercase;">¡Pedido enviado!</h2>
-    <p>Ya lo estamos viendo en el local. Te confirmamos por teléfono.</p>
-    <p class="order-number" id="orderNumber"></p>
-
-    <div class="mp-box" id="mpBox" style="display:none;">
-      <h3>Pagá por Mercado Pago</h3>
-      <p>Transferí el total al alias:</p>
-      <p class="mp-box__alias" id="mpAlias"></p>
-      <p class="mp-box__holder" id="mpHolder"></p>
-      <p class="mp-box__amount" id="mpAmount"></p>
-      <button type="button" class="btn btn--ghost" id="copyAliasBtn">Copiar alias</button>
-      <p class="mp-box__note">Cuando retires o recibas el pedido, mostrá el comprobante.</p>
-    </div>
-
-    <p class="cash-note" id="cashNote" style="display:none;"></p>
-    <a href="index.html" class="btn btn--ghost" style="margin-top:24px;">Volver al inicio</a>
-  </div>
-
-</main>
+  </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js"></script>

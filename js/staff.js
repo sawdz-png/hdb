@@ -163,6 +163,10 @@ function orderCardHTML(o, isNew) {
           : ""
       }
 
+      ${o.ready_at && (o.status === "aceptado" || o.status === "listo")
+        ? `<div class="order-card__eta">⏱ Prometido para las ${fmtTime(o.ready_at)}</div>`
+        : ""}
+
       <div class="order-card__total">${money(o.total)}</div>
 
       <div class="order-card__actions">${actionsHTML(o)}</div>
@@ -173,7 +177,7 @@ function orderCardHTML(o, isNew) {
 function actionsHTML(o) {
   if (o.status === "pendiente") {
     return `
-      <button class="btn-accept" data-action="aceptado" data-id="${o.id}">Aceptar</button>
+      <button class="btn-accept" data-action="pick-eta" data-id="${o.id}">Aceptar</button>
       <button class="btn-reject" data-action="rechazado" data-id="${o.id}">Rechazar</button>
     `;
   }
@@ -196,17 +200,49 @@ document.getElementById("orderList").addEventListener("click", async (e) => {
   const btn = e.target.closest("button[data-action]");
   if (!btn) return;
   const id = Number(btn.dataset.id);
-  const status = btn.dataset.action;
-  btn.disabled = true;
+  const action = btn.dataset.action;
 
-  const { error } = await sb.from("orders").update({ status }).eq("id", id);
+  // paso intermedio: al aceptar, primero se elige la demora
+  if (action === "pick-eta") {
+    const card = btn.closest(".order-card");
+    card.querySelector(".order-card__actions").innerHTML = `
+      <span class="eta-label">¿Demora?</span>
+      <button class="btn-eta" data-action="aceptar-eta" data-id="${id}" data-min="15">15 min</button>
+      <button class="btn-eta" data-action="aceptar-eta" data-id="${id}" data-min="30">30 min</button>
+      <button class="btn-eta" data-action="aceptar-eta" data-id="${id}" data-min="45">45 min</button>
+      <button class="btn-eta" data-action="aceptar-eta" data-id="${id}" data-min="60">60 min</button>
+      <button class="btn-eta btn-eta--cancel" data-action="cancel-eta" data-id="${id}">✕</button>
+    `;
+    return;
+  }
+
+  if (action === "cancel-eta") {
+    renderOrders();
+    return;
+  }
+
+  btn.disabled = true;
+  let update;
+  let newStatus;
+
+  if (action === "aceptar-eta") {
+    newStatus = "aceptado";
+    const minutes = Number(btn.dataset.min);
+    const readyAt = new Date(Date.now() + minutes * 60000).toISOString();
+    update = { status: "aceptado", ready_at: readyAt };
+  } else {
+    newStatus = action;
+    update = { status: action };
+  }
+
+  const { error } = await sb.from("orders").update(update).eq("id", id);
   if (error) {
     console.error(error);
     btn.disabled = false;
     return;
   }
   const idx = orders.findIndex((o) => o.id === id);
-  if (idx !== -1) orders[idx].status = status;
+  if (idx !== -1) orders[idx] = { ...orders[idx], ...update };
   renderOrders();
 });
 

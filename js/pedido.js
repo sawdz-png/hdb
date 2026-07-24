@@ -202,39 +202,22 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
     return;
   }
 
-  document.getElementById("orderStep").style.display = "none";
-  document.getElementById("confirmStep").style.display = "block";
-  document.getElementById("orderNumber").textContent = `Pedido N.º ${data}`;
-
-  // si eligió Mercado Pago, mostrarle el alias y el monto a transferir
-  if (paymentMethod === "mercado_pago") {
-    document.getElementById("mpAlias").textContent = MP_ALIAS;
-    document.getElementById("mpHolder").textContent = `Titular: ${MP_TITULAR}`;
-    document.getElementById("mpAmount").textContent = `Total a transferir: ${money(total)}`;
-    document.getElementById("mpBox").style.display = "block";
-  }
-
-  // si paga en efectivo y dijo con cuánto, confirmarle el vuelto
-  if (paymentMethod === "efectivo" && cashAmount !== null) {
-    const cashNote = document.getElementById("cashNote");
-    cashNote.textContent =
-      cashAmount === total
-        ? "Anotado: pagás justo, sin vuelto."
-        : `Anotado: pagás con ${money(cashAmount)} — te llevamos ${money(cashAmount - total)} de vuelto.`;
-    cashNote.style.display = "block";
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-document.getElementById("copyAliasBtn").addEventListener("click", async () => {
+  // guardar el pedido en este dispositivo para poder seguirlo después
   try {
-    await navigator.clipboard.writeText(MP_ALIAS);
-    document.getElementById("copyAliasBtn").textContent = "¡Alias copiado!";
+    const saved = JSON.parse(localStorage.getItem("hdb_mis_pedidos")) || [];
+    saved.push({ id: data, phone: payload.phone });
+    localStorage.setItem("hdb_mis_pedidos", JSON.stringify(saved));
   } catch {
-    // si el navegador no deja copiar, no pasa nada: el alias está a la vista
+    // si el navegador no deja guardar, no pasa nada
   }
+
+  // ir directo a la pantalla de seguimiento del pedido
+  const params = new URLSearchParams({ pedido: data, tel: payload.phone });
+  if (paymentMethod === "mercado_pago") params.set("mp", "1");
+  if (paymentMethod === "efectivo" && cashAmount !== null) params.set("efectivo", cashAmount);
+  window.location.href = `seguimiento.html?${params.toString()}`;
 });
+
 
 buildMenu();
 updateCartBar();
