@@ -80,7 +80,6 @@ document.getElementById("menuContainer").addEventListener("click", (e) => {
   updateCartBar();
 });
 
-// mostrar/ocultar campo de dirección
 document.querySelectorAll('input[name="orderType"]').forEach((radio) => {
   radio.addEventListener("change", () => {
     const addressField = document.getElementById("addressField");
@@ -136,7 +135,16 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
   submitBtn.disabled = true;
   submitBtn.textContent = "Enviando...";
 
-  const { data, error } = await sb.from("orders").insert([payload]).select();
+  const { data, error } = await sb.rpc("create_order", {
+    p_customer_name: payload.customer_name,
+    p_phone: payload.phone,
+    p_order_type: payload.order_type,
+    p_address: payload.address,
+    p_payment_method: payload.payment_method,
+    p_items: items,
+    p_notes: payload.notes,
+    p_total: total,
+  });
 
   if (error) {
     console.error(error);
@@ -149,7 +157,7 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
 
   document.getElementById("orderStep").style.display = "none";
   document.getElementById("confirmStep").style.display = "block";
-  document.getElementById("orderNumber").textContent = `Pedido N.º ${data[0].id}`;
+  document.getElementById("orderNumber").textContent = `Pedido N.º ${data}`;
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
